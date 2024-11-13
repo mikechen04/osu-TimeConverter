@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Converter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Libre Franklin', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      flex-direction: column;
+      font-size: 1.8em; 
+    }
+    #converter {
+      margin-top: 20px;
+    }
+    #clock {
+      font-size: 2.5em;
+    }
+    #converter, footer {
+      font-size: 1.4em; 
+    }
+    label, select, input, button, p {
+      font-size: 1em; 
+    }
+    #gif {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 250px; 
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock"><span id="utcTime" UTC></span> UTC</div>
+
+  <div id="converter">
+    <label for="timeInput">Enter Time:</label>
+    <input type="time" id="timeInput" required>
+    <p> </p>
+    <label for="timeZone">Select Your Time Zone:</label>
+    <select id="timeZone">
+      <option value="-12">UTC-12:00</option>
+      <option value="-11">UTC-11:00</option>
+      <option value="-10">UTC-10:00</option>
+      <option value="-9">UTC-9:00</option>
+      <option value="-8">UTC-8:00</option>
+      <option value="-7">UTC-7:00</option>
+      <option value="-6">UTC-6:00</option>
+      <option value="-5">UTC-5:00</option>
+      <option value="-4">UTC-4:00</option>
+      <option value="-3">UTC-3:00</option>
+      <option value="-2">UTC-2:00</option>
+      <option value="-1">UTC-1:00</option>
+      <option value="0" selected>UTC+0:00</option>
+      <option value="1">UTC+1:00</option>
+      <option value="2">UTC+2:00</option>
+      <option value="3">UTC+3:00</option>
+      <option value="4">UTC+4:00</option>
+      <option value="5">UTC+5:00</option>
+      <option value="6">UTC+6:00</option>
+      <option value="7">UTC+7:00</option>
+      <option value="8">UTC+8:00</option>
+      <option value="9">UTC+9:00</option>
+      <option value="10">UTC+10:00</option>
+      <option value="11">UTC+11:00</option>
+      <option value="12">UTC+12:00</option>
+    </select>
+    <p> </p>
+    <button onclick="convertToUTC()">Convert!</button>
+
+    <p id="convertedTime">Converted Time: <span id="utcResult">--:--</span> UTC</p>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("utcTime").textContent = now.toUTCString().slice(17, 25);
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); 
+
+    function convertToUTC() {
+      const timeInput = document.getElementById("timeInput").value;
+      const timeZoneOffset = parseInt(document.getElementById("timeZone").value);
+
+      if (timeInput) {
+        const [hours, minutes] = timeInput.split(":").map(Number);
+        const inputDate = new Date();
+        inputDate.setUTCHours(hours - timeZoneOffset, minutes, 0, 0);
+
+        document.getElementById("utcResult").textContent = inputDate.toUTCString().slice(17, 25);
+      } else {
+        alert("what the sigma (ERROR!!!!!!!!!!)");
+      }
+    }
+  </script>
+
+  <footer>
+    <p>Made by <a href="https://osu.ppy.sh/users/9632648"> soft kitten <3</a></p>
+  </footer>
+
+  <img id="gif" src="funny.gif" alt="GIF">
+</body>
+</html>
